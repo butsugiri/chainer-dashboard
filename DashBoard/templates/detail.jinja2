@@ -1,0 +1,40 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+<div class="row">
+    <h1>Model Parameters of <span id='date-time'>{{ date_time }}</span></h1>
+      <div class="col-md-6">
+        <p>This model ... so far...</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">Parameter Name</th>
+                <th class="text-center">Value</th>
+              </tr>
+            </thead>
+          <tbody>
+            {% for key, value in param_file.data.items() %}
+            <tr>
+              <td class="text-center">{{ key }}</td>
+              <td class="text-center">{{ value }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+</div>
+<div class="row">
+  <h1>Training Results</h1>
+  <div class="col-md-6">
+    <div>
+      <img id='graph' v-bind:src='name'>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/vue@2.2.2"></script>
+    <script src="/static/script/detail.js"></script>
+{% endblock %}

@@ -16,9 +16,9 @@
             {% for log in log_files %}
             <tr>
               <td class="text-center">{{ log.date }}</td>
-              <td class="text-center">{{ log.epoch }}</td>
-              <td class="text-center">{{ log.elapsed_time }}</td>
-              <td class="text-center"><a class="btn btn-default" href={{ log.href }} role="button">Show</a></td>
+              <td class="text-center">{{ log.total_epoch }}</td>
+              <td class="text-center">{{ log.total_time }}</td>
+              <td class="text-center"><a class="btn btn-default" href="log/{{ log.href }}" role="button">Show</a></td>
             </tr>
             {% endfor %}
           </tbody>
@@ -31,6 +31,6 @@
 {% block scripts %}
     <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
-    <script src="/static/script/script.js"></script>
+    <script src="/static/script/index.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" />
 {% endblock %}
