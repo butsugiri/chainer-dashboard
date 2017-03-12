@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
+import glob
 from os import environ
 from DashBoard import app
 
 if __name__ == '__main__':
     HOST = environ.get('SERVER_HOST', 'localhost')
-    print(os.getcwd())
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'DashBoard', 'static', 'images', "*.png")
+    images = glob.glob(path)
+    for img in images:
+        os.remove(img)
     try:
         PORT = int(environ.get('SERVER_PORT', '5555'))
     except ValueError:

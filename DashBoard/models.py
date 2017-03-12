@@ -2,6 +2,7 @@
 import os
 import json
 import random
+import string
 from datetime import datetime
 import matplotlib
 matplotlib.use('Agg')
@@ -27,24 +28,18 @@ class ParamFile(object):
         self.data = json.load(open(path))
 
 class TempImage(object):
-        def __init__(self, file_name, data, x, y):
-            self.file_name = file_name
+        def __init__(self, data):
             self.data = data
-            self.x = x
-            self.y = y
 
-        def create_png(self):
+        def create_png(self, x, y):
+            chars = string.digits + string.ascii_lowercase
+            self.file_name = ''.join(random.choice(chars) for i in range(64)) + '.png'
+
             fig, ax = plt.subplots()
-            ax.set_title(u'hogehoge')
-
             df = pd.DataFrame(self.data)
-            df.plot(ax=ax, x=self.x, y=self.y)
+            df.plot(ax=ax, x=x, y=y, legend=False)
+            plt.xlabel(x)
+            plt.ylabel(y)
 
-            # ax.plot(x_ax, y_ax)
-            fig.savefig(os.path.join(os.path.dirname(__file__), 'static', 'image', self.file_name))
-
-        def __enter__(self):
-            return self
-
-        def __exit__(self, exc_type, exc_value, traceback):
-            pass
+            fig.savefig(os.path.join(os.path.dirname(__file__), 'static', 'images', self.file_name))
+            plt.close()

@@ -27,17 +27,21 @@ def root_page():
 def show_log(date_time):
     path = os.path.join(os.getcwd(), "result", date_time, "log")
     log_file = LogFile(path)
+    labels = sorted([x.replace("/", "-") for x in log_file.data[0].keys() if x != 'epoch' and x != 'iteration'])
 
     path = os.path.join(os.getcwd(), "result", date_time, "settings.json")
     param_file = ParamFile(path)
 
+    epoch_so_far = len(log_file.data)
+    total_epoch = param_file.data['epoch']
     return render_template(
         'detail.jinja2',
         param_file=param_file,
-        date_time=date_time
+        date_time=date_time,
+        labels=labels,
+        epoch_so_far=epoch_so_far,
+        total_epoch=total_epoch
     )
-    # with open(path, 'r') as fi:
-    #     return fi.read()
 
 @app.route('/plot', methods=["POST"])
 def plot_graph():
@@ -45,10 +49,16 @@ def plot_graph():
     path = os.path.join(os.getcwd(), "result", posted_data['dateTime'], "log")
     log_file = LogFile(path)
 
-    img_name = 'hoge.png'
-    x = 'epoch'
-    y = 'main/loss'
+    img = TempImage(log_file.data)
+    img.create_png(x='epoch', y=posted_data['yAxis'].replace("-", "/"))
 
-    with TempImage(img_name, log_file.data, x, y) as img:
-        img.create_png()
-        return json.dumps(url_for("static", filename=os.path.join('image', img_name)))
+    return json.dumps(url_for("static", filename=os.path.join('images', img.file_name)))
+
+@app.route('/details', methods=["POST"])
+def details():
+    posted_data = json.loads(request.data.decode('utf-8'))
+    path = os.path.join(os.getcwd(), "result", posted_data['dateTime'], "log")
+    log_file = LogFile(path)
+    key = posted_data["yAxis"].replace("-", "/")
+    out = [x[key] for x in log_file.data]
+    return json.dumps(out)

@@ -1,40 +1,70 @@
-{% extends "layout.jinja2" %}
-
-{% block content %}
+{% extends "layout.jinja2" %} {% block content %}
 <div class="row">
-    <h1>Model Parameters of <span id='date-time'>{{ date_time }}</span></h1>
-      <div class="col-md-6">
-        <p>This model ... so far...</p>
+    <h1>Model Parameters of "<span id='date-time'>{{ date_time }}</span>"</h1>
+    <div class="col-md-6">
+        <h4>This model has gone through {{ epoch_so_far }}/{{ total_epoch }} epochs so far</h4>
         <table class="table table-bordered table-hover">
             <thead>
-              <tr>
-                <th class="text-center">Parameter Name</th>
-                <th class="text-center">Value</th>
-              </tr>
+                <tr>
+                    <th class="text-center">Parameter Name</th>
+                    <th class="text-center">Value</th>
+                </tr>
             </thead>
-          <tbody>
-            {% for key, value in param_file.data.items() %}
-            <tr>
-              <td class="text-center">{{ key }}</td>
-              <td class="text-center">{{ value }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
+            <tbody>
+                {% for key, value in param_file.data.items() %}
+                <tr>
+                    <td class="text-center">{{ key }}</td>
+                    <td class="text-center">{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-      </div>
+    </div>
 </div>
 <div class="row">
-  <h1>Training Results</h1>
-  <div class="col-md-6">
-    <div>
-      <img id='graph' v-bind:src='name'>
+    <h1>Training Results</h1>
+    <div class='col-md-2'>
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            {% for label in labels %}
+            {% if loop.index0 == 0 %}
+            <li role="presentation" class='active'><a href="#{{ label }}" aria-controls="{{ label }}" role="tab" data-toggle="tab">{{ label }}</a></li>
+            {% else %}
+            <li role="presentation"><a href="#{{ label }}" aria-controls="{{ label }}" role="tab" data-toggle="tab">{{ label }}</a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
-  </div>
+    <div class='col-md-10'>
+        <div class="tab-content">
+            {% for label in labels %}
+            {% if loop.index0 == 0 %}
+            <div role="tabpanel" class="tab-pane result-content active" id="{{ label }}">
+                <div class='panel image-content col-md-6'>
+                    <div class='thumbnail'>
+                        <div class='caption'>
+                        </div>
+                    </div>
+                </div>
+                <div class='log-content col-md-6'>
+                </div>
+            </div>
+            {% else %}
+            <div role="tabpanel" class="tab-pane result-content" id="{{ label }}">
+                <div class='panel image-content col-md-6'>
+                    <div class='thumbnail'>
+                        <div class='caption'>
+                        </div>
+                    </div>
+                </div>
+                <div class='log-content col-md-6 panel'>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-    <script src="https://unpkg.com/vue@2.2.2"></script>
-    <script src="/static/script/detail.js"></script>
+{% endblock %} {% block scripts %}
+<script src="/static/script/detail.js"></script>
 {% endblock %}
