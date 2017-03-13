@@ -1,6 +1,6 @@
-"""
-The flask application package.
-"""
+'''
+A DashBoard-like app for chainer
+'''
 
 from flask import Flask
 app = Flask(__name__)

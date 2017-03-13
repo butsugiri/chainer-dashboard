@@ -2,3 +2,7 @@
 .tern-project
 DashBoard/static/images/*
 !.gitkeep
+
+*.egg-info
+build/
+dist/
