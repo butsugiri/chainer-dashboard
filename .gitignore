@@ -1,2 +1,4 @@
 *.ipynb
 .tern-project
+DashBoard/static/images/*
+!.gitkeep
