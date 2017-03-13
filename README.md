@@ -35,7 +35,8 @@ Finally, open `http://localhost:5555/`
 
 ## Directory Structure
 This app assumes that the result of the experiment is organized by the following manner.
-When execute `runserver`, the app automatically detects results dir and displays the log files inside.
+
+When executing `runserver`, the app automatically detects results dir and displays the log files inside.
 
 ```
 result/
@@ -47,7 +48,7 @@ result/
 ```
 
 Here, `settings.json` is a dictionary object that contains hyperparamers.
-Typically obtained by saving all the arguments provided to `argparse` module.
+Typically this is obtained by saving all the arguments that are provided to `argparse` module.
 For example,
 
 ```python
